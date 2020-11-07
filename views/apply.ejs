@@ -33,75 +33,42 @@
             </div>
         </header>
         <br><br><br>
-        <div class="row" style="margin-top: 30px;">
-            <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: black;">Let's find you a job</h5>
-                        <form action="/search-job" method="GET" class="validated-form" novalidate>
-                            <div class="mb-3">
-                                
-                                <div class="searchable">
-                                    <label class="form-label" for="job" style="color: black;">Job Title</label>
-                                <input class="form-control" list="jobl" type="text" id="job" name="job" autofocus required>
-                                <datalist id="jobl">
-                                    <%for(var i=0;i<categories.length;i++){%>
-                                        <option value="<%=categories[i]%>">
-
-                                        <%}%>
-                                    
-                                  </datalist>
-                                </div>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                            </div>
-    
-                            <div class="mb-3">
-                                <label class="form-label" for="address" style="color: black;">City or Zip</label>
-                                <div>
-                                    <input class="form-control" type="text" id="address" name="address" required>
-                                    <br>
-                                    <div class="btn btn-primary" onclick="getCoordintes()"> <i class="material-icons">my_location</i></div>  
-                                </div>
-                                                              <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                            </div>
-                            <button class="btn btn-success btn-block">Search</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            </div>
-
-           
-            <%if(search){%>
-                <br><br>
+                
             <div class="container-fluid">
-            <h1>We found these jobs matching your requirements</h1>
             
             
             <div class="card " style="justify-content: center;"  >
                 <div class="row" style="color: black;">
 
-                <%for(var i=0;i<jobs.length;i++){%>
                     
                     <div class="col-sm-12 " >
                         <div class="card-body">
-                            <h5 class="card-title">For- <%=jobs[i].jobType%> </h5>
-                            <p class="card-text">Description- <%=jobs[i].description%></p>
-                            <p class="card-text">Price- Rs <%=jobs[i].salary%></p>
+                            <h5 class="card-title">For- <%=jobs.jobType%> </h5>
+                            <p class="card-text">Description- <%=jobs.description%></p>
+                            <p class="card-text">Price- Rs <%=jobs.salary%></p>
 
                             <p class="card-text">
-                              <br>  <small >City- <%=jobs[i].city%></small>
+                                <small >City- <%=jobs.location%></small>
+
+                              <br>  <small >City- <%=jobs.city%></small>
 
                             </p>
-                            <a class="btn btn-primary" href="/apply/?jobid=<%=jobs[i]._id%>">More Info</a>
+                            <div style="display: block;" id="apply" >
+
+                            <a class="btn btn-primary"  onclick="apply()">Get in touch</a>
+                           </div>
+
                         </div>
+                        <div style="display: none;" id="cancel" >
+                            <hr>
+
+                        <p>Your employer has been notified, they will get in touch with you shortly</p>
+                        <p>You can chat with them below</p><br>
+                        <a class="btn btn-danger" onclick="cancel()">Cancel</a>
+
+                    </div>
                     </div>
                 <hr style="color: blueviolet;">
-<%}%>
 </div>
 
 
@@ -109,7 +76,6 @@
             
             </div>
 
-            <%}%>
                 
 
 
@@ -122,7 +88,19 @@
         crossorigin="anonymous"></script>
 
         <script type="text/javascript">
-            
+            function apply(){
+   $.post("http://localhost:3000/apply/<%-currentUser._id%>",{id:"<%-jobs._id%>"} )
+   document.getElementById("apply").style.display='none';
+   document.getElementById("cancel").style.display='block';
+
+ }
+
+ function cancel(){
+   $.post("http://localhost:3000/cancel/<%-currentUser._id%>",{id:"<%-jobs._id%>"} )
+   document.getElementById("apply").style.display='block';
+   document.getElementById("cancel").style.display='none';
+
+ }
 
 //Get user coordinates 
 function getCoordintes() { 
@@ -174,19 +152,7 @@ function getCity(coordinates) {
 } 
   
 
-
-  
-
-
         </script>
-
-<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BOuo47Dc3aulXw9tnCOSDqHg6wxyOULh9n3W7-WPnHifWAdrTECdD3pvugBSfDkWdJr5vFWVl6_TRIiX9S0XBxk' ,'integration':'popup' });
-   webpushr('fetch_id',function (sid) { 
-        //save id to database
-        console.log('webpushr subscriber id: ' + sid)
-    });
-</script><!-- end webpushr code -->
-
 </body>
 
 </html>

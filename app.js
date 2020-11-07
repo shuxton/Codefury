@@ -8,9 +8,16 @@ const flash = require('connect-flash');
 const session = require('express-session')
 const passport = require('passport')
 const User = require('./models/user')
+const Job = require('./models/jobs')
 const Host = require('./models/admin')
 const Message = require('./models/message')
+var request = require('request');
 
+var headers = {
+    'webpushrKey': '73d2b76691b8003dd2a54793c4c78ab0',
+    'webpushrAuthToken': '17171',
+    'Content-Type': 'application/json'
+};
 const LocalStrategy = require('passport-local')
 const mongoSanitize = require('express-mongo-sanitize');
 
@@ -100,15 +107,36 @@ app.use((req, res, next) => {
 app.use('/' , userRoutes);
 app.use('/' , detailsRoutes);
 
+// -----------------------------------
+
+
 app.get('/', (req, res) => {
     Host.find({},function(err,found){
         //console.log(found)
         if(err)console.log(err)
-        else     res.render('chat',{categories:found[0].categories})
+        else     res.render('home',{categories:found[0].categories,search:false})
 
     })
   
 });
+
+app.get('/search-job',(req,res)=>{
+    Job.find({city:req.query.address},function(err,val){
+        Host.find({},function(err,found){
+        if(err)console.log(err)
+        else     res.render('home',{categories:found[0].categories,search:true,jobs:val})
+        })
+    })
+})
+
+app.get('/apply',(req,res)=>{
+    Job.find({_id:req.query.jobid},function(err,val){
+
+        if(err)console.log(err)
+        else     res.render('apply',{jobs:val[0]})
+    
+    })
+})
 
 io.on("connection", () =>{
     console.log("a user is connected")
@@ -134,6 +162,71 @@ app.get('/messages', (req, res) => {
       res.sendStatus(200);
     })
   })
+
+
+  app.post('/apply/:user',(req,res)=>{
+     
+      Job.find({_id:req.body.id},(err,job)=>{
+User.updateOne({_id:req.params.user},{$set:{
+    appliedTo:job[0].userid,
+    toJobId:req.body.id
+}}, function (err, res) {
+    if(err)
+    console.log(err)
+    }
+  )
+User.updateOne({_id:job[0].userid},{$set:{
+    appliedBy:req.params.user,
+    byJobId:req.body.id
+}}, function (err, res) {
+    if(err)
+    console.log(err)
+    })
+      })
+
+   
+
+var dataString = '{"title":"Your request has been accepted!","message":"notification message","target_url":"https://www.webpushr.com","sid":"64546"}';
+
+var options = {
+    url: 'https://api.webpushr.com/v1/notification/send/sid',
+    method: 'POST',
+    headers: headers,
+    body: dataString
+};
+
+function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(body);
+    }
+}
+
+// request(options, callback);
+  })
+
+  app.post('/cancel/:user',(req,res)=>{
+     
+    Job.find({_id:req.body.id},(err,job)=>{
+User.updateOne({_id:req.params.user},{$set:{
+  appliedTo:null,
+  toJobId:null,
+}}, function (err, res) {
+  if(err)
+  console.log(err)
+  }
+)
+User.updateOne({_id:job[0].userid},{$set:{
+  appliedBy:null,
+  byJobId:null,
+}}, function (err, res) {
+  if(err)
+  console.log(err)
+  })
+    })
+})
+
+// -----------------------------------
+
 
 app.all('*' , (req, res, next) => {
     next(new ExpressError('Page Not Found' , 404))

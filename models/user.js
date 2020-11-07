@@ -17,6 +17,18 @@ const UserSchema = new Schema({
     } , 
     emp: {
         type: Boolean ,     
+    } ,
+    appliedTo: {
+        type: String ,
+    },
+    appliedBy:{
+        type: String,
+    },
+    toJobId:{
+        type: String,
+    },
+    byJobId:{
+        type: String,
     }
 });
 
