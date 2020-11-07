@@ -30,7 +30,9 @@ const mongoSanitize = require('express-mongo-sanitize');
 
 //login route
 const userRoutes = require('./routes/users')
-const detailsRoutes = require('./routes/details')
+const jobRoutes = require('./routes/jobs')
+const accomodateRoute = require('./routes/accomodate')
+
 const MongoDBStore = require("connect-mongo")(session);
 
 const dbUrl = 'mongodb+srv://sans:bowbow@codefury.gkzbe.mongodb.net/codefury?retryWrites=true&w=majority';
@@ -126,7 +128,8 @@ app.use((req, res, next) => {
 })
 
 app.use('/', userRoutes);
-app.use('/', detailsRoutes);
+app.use('/', jobRoutes);
+app.use('/', accomodateRoute);
 
 // -----------------------------------
 

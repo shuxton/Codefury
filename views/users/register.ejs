@@ -1,57 +1,149 @@
 <% layout('layouts/boilerplate')%>
-<div class="container d-flex justify-content-center align-items-center mt-5">
-    <div class="row">
-        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h5 class="card-title">Register</h5>
-                    <form action="/register" method="POST" class="validated-form" novalidate>
-                        <div class="mb-3">
-                            <label class="form-label" for="username">Username</label>
-                            <input class="form-control" type="text" id="username" name="username" required autofocus>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="email">Email</label>
-                            <input class="form-control" type="email" id="email" name="email" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="password">Password</label>
-                            <input class="form-control" type="password" id="password" name="password" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                        </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="emp">Employee or Employer ? </label>
-                                <input class="form-control" type="text" id="emp" name="emp" autofocus required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                            </div>
-                            <div>
-                                <label for="phoneNumber" class="form-label">Enter You Phone Number</label>
-                                <input type="text" id="phoneNumber" name="phoneNumber" required >
-                                <div class="valid-feedback">
-                                    Looks good!
-                            </div>
-                            <div>
-                                <label for="address" class="form-label">Address</label>
-                                <input type="text" id="address" name="address" required >
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                            </div>
-                        <button class="btn btn-success btn-block">Register</button>
-                    </form>
 
+
+<head>
+    <title>Contact Form Tutorial by Bootstrapious.com</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,500' rel='stylesheet' type='text/css'>
+    <!-- <link href='custom.css' rel='stylesheet' type='text/css'> -->
+    <style>
+        .heading {
+            height: 100px;
+            width: 800px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        #emp {
+            -moz-tab-size: 4;
+            tab-size: 4;
+
+        }
+    </style>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit(token) {
+            document.getElementById("demo-form").submit();
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-xl-8 offset-xl-2">
+                <div class="heading">
+                    <h1 class="center">Registration</h1>
                 </div>
+                <form action="/register" method="POST">
+
+                    <div class="messages"></div>
+
+                    <div class="controls">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="username">Username *</label>
+                                    <input id="username" type="text" name="username" class="form-control"
+                                        placeholder="Please enter your firstname" required="required"
+                                        data-error="Firstname is required.">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="password">Password *</label>
+                                    <input id="password" type="password" name="password" class="form-control"
+                                        placeholder="Password" required="required"
+                                        data-error="Password is required *.">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input id="email" type="email" name="email" class="form-control"
+                                        placeholder="Please enter your email " required="required"
+                                        data-error="Valid email is required.">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="phoneNumber">Phone</label>
+                                    <input id="phoneNumber" type="text" name="phoneNumber" class="form-control"
+                                        placeholder="Please enter your phone">
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <p id="radios">Please Select Your User Type:</p>
+                                    <input type="radio" id="emp" name="userType" value="emp">
+                                    <label for="emp" style="margin-right: 3rem;">Employee</label>
+                                    <input type="radio" id="employ" name="userType" value="employ">
+
+                                    <label for="employ">Employer</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="address">Address </label>
+                                        <input id="address" type="text" name="address" class="form-control"
+                                            placeholder="Please enter your address *" required="required"
+                                            data-error="Address is required.">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="g-recaptcha" data-sitekey="6LfKURIUAAAAAO50vlwWZkyK_G2ywqE52NU7YO0S"></div>
+                                <input class="form-control d-none" data-recaptcha="false"
+                                    data-callback="verifyRecaptchaCallback"
+                                    data-expired-callback="expiredRecaptchaCallback"
+                                    data-error="Please complete the Captcha">
+
+                            </div>
+
+                            <!-- <button class="g-recaptcha" data-sitekey="reCAPTCHA_site_key" data-callback='onSubmit'
+                                data-action='submit'>Submit</button>
+                            data-callback="verifyRecaptchaCallback"
+                                    data-expired-callback="expiredRecaptchaCallback" 
+                                class="help-block with-errors"-->
+
+
+                            <button class="btn btn-success btn-block">Register</button>
+
+
+                        </div>
+
+                </form>
+
             </div>
+            <!-- /.8 -->
+
         </div>
+        <!-- /.row-->
+
     </div>
-</div>
+    <!-- /.container-->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!-- <script src="validator.js"></script>
+        <script src="contact.js"></script> -->
+</body>
