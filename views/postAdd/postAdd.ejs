@@ -1,0 +1,114 @@
+<% layout('layouts/boilerplate')%>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Put A job </h5>
+                    <form action="/employer" method="POST" class="validated-form" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="jobType">Job Title</label>
+                            <input class="form-control" list="jobl" type="text" id="jobType" name="jobType" autofocus required>
+                            <datalist id="jobl">
+                                
+                                </datalist>
+
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Description</label>
+                            <textarea class="form-control" name="description" id="description" cols="30" rows="3" required></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" type="text" id="location" name="location" autofocus required placeholder="Address">
+                            
+                            <input class="form-control" type="text" id="city" name="city" autofocus required placeholder="City">
+
+                            <br>
+                           <div class="btn btn-primary" onclick="getCoordintes()"> <i class="material-icons">my_location</i></div>  
+
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="salary">Salary</label>
+                            <input class="form-control" type="text" id="salary" name="salary" autofocus required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <button class="btn btn-success btn-block">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+            
+
+    //Get user coordinates 
+    function getCoordintes() { 
+        var options = { 
+            enableHighAccuracy: true, 
+            timeout: 5000, 
+            maximumAge: 0 
+        }; 
+      
+        function success(pos) { 
+            var crd = pos.coords; 
+            var lat = crd.latitude.toString(); 
+            var lng = crd.longitude.toString(); 
+            var coordinates = [lat, lng]; 
+            //console.log(`Latitude: ${lat}, Longitude: ${lng}`); 
+            getCity(coordinates); 
+            return; 
+      
+        } 
+      
+        function error(err) { 
+            console.warn(`ERROR(${err.code}): ${err.message}`); 
+        } 
+      
+        navigator.geolocation.getCurrentPosition(success, error, options); 
+    } 
+      
+    // Get city name 
+    function getCity(coordinates) { 
+        var xhr = new XMLHttpRequest(); 
+        var lat = coordinates[0]; 
+        var lng = coordinates[1]; 
+      
+        xhr.open('GET', "https://us1.locationiq.com/v1/reverse.php?key=pk.f36621844e7c79159ee5abca7ddc66af&lat=" + 
+        lat + "&lon=" + lng + "&format=json", true); 
+        xhr.send(); 
+        xhr.onreadystatechange = processRequest; 
+        xhr.addEventListener("readystatechange", processRequest, false); 
+      
+        function processRequest(e) { 
+            if (xhr.readyState == 4 && xhr.status == 200) { 
+                var response = JSON.parse(xhr.responseText); 
+                console.log(response)
+                var address = response.display_name; 
+                document.getElementById("location").value=address
+                var city = response.address.city; 
+                document.getElementById("city").value=city
+                //console.log(city); 
+                return; 
+            } 
+        } 
+    } 
+      
+    
+            </script>

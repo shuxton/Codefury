@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeFury</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/home.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+</head>
+
+<body class="d-flex text-center text-white bg-dark">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <h3 class="float-md-left mb-0">CodeFury</h3>
+                <nav class="nav nav-masthead justify-content-center float-md-right">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <% if(!currentUser) { %>
+                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="/register">Register</a>
+                    <% } else { %>
+                    <a class="nav-link" href="/logout">Logout</a>
+                    <% } %>
+                </nav>
+            </div>
+        </header>
+        <br><br><br>
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: black;">Let's find you a job</h5>
+                        <form action="/search-job" method="POST" class="validated-form" novalidate>
+                            <div class="mb-3">
+                                
+                                <div class="searchable">
+                                    <label class="form-label" for="job" style="color: black;">Job Title</label>
+                                <input class="form-control" list="jobl" type="text" id="job" name="job" autofocus required>
+                                <datalist id="jobl">
+                                    <%for(var i=0;i<categories.length;i++){%>
+                                        <option value="<%=categories[i]%>">
+
+                                        <%}%>
+                                    
+                                  </datalist>
+                                </div>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+    
+                            <div class="mb-3">
+                                <label class="form-label" for="address" style="color: black;">City or Zip</label>
+                                <div>
+                                    <input class="form-control" type="text" id="address" name="address" required>
+                                    <br>
+                                    <div class="btn btn-primary" onclick="getCoordintes()"> <i class="material-icons">my_location</i></div>  
+                                </div>
+                                                              <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <button class="btn btn-success btn-block">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+           
+            <div id="cluster-map"></div>
+            <div class="container">
+            <h1>All Jobs</h1>
+            
+            
+            <div class="card xs-12" >
+                <div class="row" style="color: black;">
+                    
+                    <div class="col-xs-12">
+                        <div class="card-body">
+                            <h5 class="card-title">For- Carpenter </h5>
+                            <p class="card-text">Description- Build a chair and treehouse</p>
+                            <p class="card-text">Price- Rs 1000</p>
+
+                            <p class="card-text">
+                                <small >Location- Surat</small>
+                            </p>
+                            <a class="btn btn-primary" href="">Apply</a>
+                        </div>
+                    </div>
+                </div>
+                <hr style="color: blueviolet;">
+                <div class="row" style="color: black;">
+
+                <div class="col-xs-12">
+                    <div class="card-body">
+                        <h5 class="card-title">For- Carpenter </h5>
+                        <p class="card-text">Description- Build a chair and treehouse</p>
+                        <p class="card-text">Price- Rs 1000</p>
+
+                        <p class="card-text">
+                            <small >Location- Surat</small>
+                        </p>
+                        <a class="btn btn-primary" href="">Apply</a>
+                    </div>
+                </div>
+            </div>
+            <hr style="color: blueviolet;">
+            </div>
+            
+            </div>
+
+                              
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            
+
+//Get user coordinates 
+function getCoordintes() { 
+    var options = { 
+        enableHighAccuracy: true, 
+        timeout: 5000, 
+        maximumAge: 0 
+    }; 
+  
+    function success(pos) { 
+        var crd = pos.coords; 
+        var lat = crd.latitude.toString(); 
+        var lng = crd.longitude.toString(); 
+        var coordinates = [lat, lng]; 
+        //console.log(`Latitude: ${lat}, Longitude: ${lng}`); 
+        getCity(coordinates); 
+        return; 
+  
+    } 
+  
+    function error(err) { 
+        console.warn(`ERROR(${err.code}): ${err.message}`); 
+    } 
+  
+    navigator.geolocation.getCurrentPosition(success, error, options); 
+} 
+  
+// Get city name 
+function getCity(coordinates) { 
+    var xhr = new XMLHttpRequest(); 
+    var lat = coordinates[0]; 
+    var lng = coordinates[1]; 
+  
+    xhr.open('GET', "https://us1.locationiq.com/v1/reverse.php?key=pk.f36621844e7c79159ee5abca7ddc66af&lat=" + 
+    lat + "&lon=" + lng + "&format=json", true); 
+    xhr.send(); 
+    xhr.onreadystatechange = processRequest; 
+    xhr.addEventListener("readystatechange", processRequest, false); 
+  
+    function processRequest(e) { 
+        if (xhr.readyState == 4 && xhr.status == 200) { 
+            var response = JSON.parse(xhr.responseText); 
+            var city = response.address.city; 
+            document.getElementById("address").value=city
+            //console.log(city); 
+            return; 
+        } 
+    } 
+} 
+  
+
+        </script>
+</body>
+
+</html>
