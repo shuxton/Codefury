@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeFury</title>
@@ -9,8 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script></head>
-    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 <body>
 <div class="container">
  <br>
@@ -47,13 +47,13 @@ function addMessages(message){
    }
    
 function getMessages(){
-  $.get("http://localhost:3000/messages/?id=<%-currentUser._id%>", (data) => {
+  $.get("/messages/?id=<%-currentUser._id%>", (data) => {
    data.forEach(addMessages);
    })
  }
  
 function sendMessage(message){
-   $.post("http://localhost:3000/messages/<%-currentUser._id%>/<%-currentUser.email%>", message)
+   $.post("/messages/<%-currentUser._id%>/<%-currentUser.email%>", message)
  }
 </script>
 </body>

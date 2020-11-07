@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeFury</title>
@@ -89,14 +90,14 @@
 
         <script type="text/javascript">
             function apply(){
-   $.post("http://localhost:3000/apply/<%-currentUser._id%>",{id:"<%-jobs._id%>"} )
+   $.post("/apply/<%-currentUser._id%>",{id:"<%-jobs._id%>"} )
    document.getElementById("apply").style.display='none';
    document.getElementById("cancel").style.display='block';
 
  }
 
  function cancel(){
-   $.post("http://localhost:3000/cancel/<%-currentUser._id%>",{id:"<%-jobs._id%>"} )
+   $.post("/cancel/<%-currentUser._id%>",{id:"<%-jobs._id%>"} )
    document.getElementById("apply").style.display='block';
    document.getElementById("cancel").style.display='none';
 
@@ -153,6 +154,14 @@ function getCity(coordinates) {
   
 
         </script>
+<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BPWleylyPQ44PB7HKSN9WKvfshkUreENBwqB6R9MqrnIBQidjz3ZzX0VS5O6_GyErURhkJhGvoNtDu1vaaN0VhE' ,'integration':'popup' });
+   webpushr('fetch_id',function (sid) { 
+        //save id to database
+        console.log(sid)
+        $.post("/sid/<%-currentUser._id%>/", {sid:sid})
+
+    });
+</script><!-- end webpushr code -->
 </body>
 
 </html>

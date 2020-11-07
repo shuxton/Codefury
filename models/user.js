@@ -29,6 +29,9 @@ const UserSchema = new Schema({
     },
     byJobId:{
         type: String,
+    },
+    sid:{
+        type:String
     }
 });
 
