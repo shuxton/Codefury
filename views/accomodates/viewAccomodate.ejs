@@ -1,0 +1,41 @@
+<% layout('layouts/boilerplate')%>
+<div class="container">
+    <div class="col-xl-8 offset-xl-2">
+        <h1 style=" 
+            padding: 10;
+            width: 50;
+            margin-left: auto;
+            margin-right: 75px;
+            text-align: center;
+            font-weight:200;
+        " >Accomodation Listings</h1>
+    
+    <% for (let accomodate of accomodates){%>
+    <div class="card mb-3" >
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card-body">
+                    <div class = "container" style =".container {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                      }">
+                        <h5 class="card-title">Name: <%= accomodate.name %> </h5>
+                    <p class="card-text">City: <%= accomodate.city %></p>
+                    <p class="card-text">Price Per Month: <%=accomodate.price %></p>
+                    <p class="card-text">
+                        <small class="text-muted">Phone Number: <%= accomodate.officialNumber%></small>
+                    </p>
+                    <!-- <a class="btn btn-success" href="#">View <%=accomodate.name%></a> -->
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }%>
+    </div>
+    <script>
+        const accomodates = { features: <%- JSON.stringify(accomodates) %>}
+    </script>
+    
