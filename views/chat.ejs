@@ -1,57 +1,60 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFury</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.js"></script>
-    <script src="socket.io/socket.io.js"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KaamLeDo</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.js"></script>
+  <script src="socket.io/socket.io.js"></script>
+
 <body>
-<div class="container">
- <br>
- <div class="jumbotron">
- <h1 class="display-4">Send Message</h1>
- <br>
- <textarea id = "message" class="form-control" placeholder="Your Message Here">
+  <div class="container">
+    <br>
+    <div class="jumbotron">
+      <h1 class="display-4">Send Message</h1>
+      <br>
+      <textarea id="message" class="form-control" placeholder="Your Message Here">
 </textarea>
- <br>
- <button id="send" class="btn btn-success">Send</button>
- </div>
- <div id="messages" style="color: darkblue;">
- 
-</div>
-</div>
-<script>
-$(() => {
-    $("#send").click(()=>{
-       sendMessage({
-          name: $("#name").val(), 
-          message:$("#message").val()});
-        })
+      <br>
+      <button id="send" class="btn btn-success">Send</button>
+    </div>
+    <div id="messages" style="color: darkblue;">
+
+    </div>
+  </div>
+  <script>
+    $(() => {
+      $("#send").click(() => {
+        sendMessage({
+          name: $("#name").val(),
+          message: $("#message").val()
+        });
+      })
       getMessages()
     })
-    
+
     var socket = io();
 
-socket.on("message", addMessages)
+    socket.on("message", addMessages)
 
-function addMessages(message){
-   $("#messages").append(`<h4> ${message.name} </h4><p>  ${message.message} </p>`)
-   }
-   
-function getMessages(){
-  $.get("messages/?id=<%-currentUser.toJobId%>", (data) => {
-   data.forEach(addMessages);
-   })
- }
- 
-function sendMessage(message){
-   $.post("messages/<%-currentUser.toJobId%>/<%-currentUser.email%>", message)
- }
-</script>
+    function addMessages(message) {
+      $("#messages").append(`<h4> ${message.name} </h4><p>  ${message.message} </p>`)
+    }
+
+    function getMessages() {
+      $.get("messages/?id=<%-currentUser.toJobId%>", (data) => {
+        data.forEach(addMessages);
+      })
+    }
+
+    function sendMessage(message) {
+      $.post("messages/<%-currentUser.toJobId%>/<%-currentUser.email%>", message)
+    }
+  </script>
 </body>

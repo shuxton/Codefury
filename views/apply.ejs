@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFury</title>
+    <title>KaamLeDo</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
@@ -21,7 +20,9 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
             <div>
-                <h3 class="float-md-left mb-0">CodeFury</h3>
+                <a href="/">
+                    <h3 class="float-md-left mb-0">KaamLeDo</h3>
+                </a>
                 <nav class="nav nav-masthead justify-content-center float-md-right">
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                     <% if(!currentUser) { %>
@@ -34,91 +35,49 @@
             </div>
         </header>
         <br><br><br>
-                <%if(currentUser.emp){%>
-            <div class="container-fluid">
-            
-            
-            <div class="card " style="justify-content: center;"  >
+        <div class="container-fluid">
+
+
+            <div class="card " style="justify-content: center;">
                 <div class="row" style="color: black;">
 
-                    
-                    <div class="col-sm-12 " >
+
+                    <div class="col-sm-12 ">
                         <div class="card-body">
                             <h5 class="card-title">For- <%=jobs.jobType%> </h5>
                             <p class="card-text">Description- <%=jobs.description%></p>
                             <p class="card-text">Price- Rs <%=jobs.salary%></p>
 
                             <p class="card-text">
-                                <small >City- <%=jobs.location%></small>
+                                <small>City- <%=jobs.location%></small>
 
-                              <br>  <small >City- <%=jobs.city%></small>
+                                <br> <small>City- <%=jobs.city%></small>
 
                             </p>
-                            <div style="display: block;" id="apply" >
+                            <div style="display: block;" id="apply">
 
-                            <a class="btn btn-primary"  onclick="apply()">Get in touch</a>
-                           </div>
+                                <a class="btn btn-primary" onclick="apply()">Get in touch</a>
+                            </div>
 
                         </div>
-                        <div style="display: none;" id="cancel" >
+                        <div style="display: none;" id="cancel">
                             <hr>
 
-                        <p>Your employer has been notified, they will get in touch with you shortly</p>
-                        <p>You can chat with them below</p><br>
-                        <a class="btn btn-danger" onclick="cancel()">Cancel</a>
-                        <br><br>
-                        <a class="btn btn-success" href="/chat">Chat</a>
+                            <p>Your employer has been notified, they will get in touch with you shortly</p>
+                            <p>You can chat with them below</p><br>
+                            <a class="btn btn-danger" onclick="cancel()">Cancel</a>
+                            <br><br>
+                            <a class="btn btn-success" href="/chat">Chat</a>
+                        </div>
                     </div>
-                    </div>
-                <hr style="color: blueviolet;">
-</div>
+                    <hr style="color: blueviolet;">
+                </div>
 
 
             </div>
-            
-            </div>
-            <%}else{%>
-                <div class="container-fluid">
-            
-            
-                    <div class="card " style="justify-content: center;"  >
-                        <div class="row" style="color: black;">
-        
-                            
-                            <div class="col-sm-12 " >
-                                <div class="card-body">
-                                    <h5 class="card-title">Name- <%=applied[0].email%> </h5>
-                                    <p class="card-text">Phone No- Rs <%=applied[0].phoneNumber%></p>
-        
-                                    <p class="card-text">
-                                        <small >You have got an employee!</small>        
-                                    </p>
-                                    <div style="display: block;" id="apply" >
-        
-                                    <a class="btn btn-primary"  onclick="apply()">Get in touch</a>
-                                   </div>
-        
-                                </div>
-                                <div style="display: none;" id="cancel" >
-                                    <hr>
-        
-                                <p>Your employer has been notified</p>
-                                <p>You can make a call or chat with them below</p><br>
-                                <a class="btn btn-danger" onclick="cancel()">Cancel</a>
-        
-                                <br><br>
-                                <a class="btn btn-success" href="/chat">Chat</a>
 
-                            </div>
-                            </div>
-                        <hr style="color: blueviolet;">
         </div>
         
-        
-                    </div>
-                    
-                    </div> 
-            <%}%>
                 
 
 
@@ -131,78 +90,79 @@
         crossorigin="anonymous"></script>
 
         <script type="text/javascript">
-            function apply(){
-   $.post("/apply/<%-currentUser._id%>",{id:"<%-jobs._id%>"} )
-   document.getElementById("apply").style.display='none';
-   document.getElementById("cancel").style.display='block';
+            function apply() {
+                $.post("/apply/<%-currentUser._id%>", { id: "<%-jobs._id%>" })
+                document.getElementById("apply").style.display = 'none';
+                document.getElementById("cancel").style.display = 'block';
 
- }
+            }
 
- function cancel(){
-   $.post("/cancel/<%-currentUser._id%>",{id:"<%-jobs._id%>"} )
-   document.getElementById("apply").style.display='block';
-   document.getElementById("cancel").style.display='none';
+            function cancel() {
+                $.post("/cancel/<%-currentUser._id%>", { id: "<%-jobs._id%>" })
+                document.getElementById("apply").style.display = 'block';
+                document.getElementById("cancel").style.display = 'none';
 
- }
+            }
 
-//Get user coordinates 
-function getCoordintes() { 
-    var options = { 
-        enableHighAccuracy: true, 
-        timeout: 5000, 
-        maximumAge: 0 
-    }; 
-  
-    function success(pos) { 
-        var crd = pos.coords; 
-        var lat = crd.latitude.toString(); 
-        var lng = crd.longitude.toString(); 
-        var coordinates = [lat, lng]; 
-        //console.log(`Latitude: ${lat}, Longitude: ${lng}`); 
-        getCity(coordinates); 
-        return; 
-  
-    } 
-  
-    function error(err) { 
-        console.warn(`ERROR(${err.code}): ${err.message}`); 
-    } 
-  
-    navigator.geolocation.getCurrentPosition(success, error, options); 
-} 
-  
-// Get city name 
-function getCity(coordinates) { 
-    var xhr = new XMLHttpRequest(); 
-    var lat = coordinates[0]; 
-    var lng = coordinates[1]; 
-  
-    xhr.open('GET', "https://us1.locationiq.com/v1/reverse.php?key=pk.f36621844e7c79159ee5abca7ddc66af&lat=" + 
-    lat + "&lon=" + lng + "&format=json", true); 
-    xhr.send(); 
-    xhr.onreadystatechange = processRequest; 
-    xhr.addEventListener("readystatechange", processRequest, false); 
-  
-    function processRequest(e) { 
-        if (xhr.readyState == 4 && xhr.status == 200) { 
-            var response = JSON.parse(xhr.responseText); 
-            var city = response.address.city; 
-            document.getElementById("address").value=city
-            //console.log(city); 
-            return; 
-        } 
-    } 
-} 
-  
+            //Get user coordinates
+            function getCoordintes() {
+                var options = {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
+
+                function success(pos) {
+                    var crd = pos.coords;
+                    var lat = crd.latitude.toString();
+                    var lng = crd.longitude.toString();
+                    var coordinates = [lat, lng];
+                    //console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+                    getCity(coordinates);
+                    return;
+
+                }
+
+                function error(err) {
+                    console.warn(`ERROR(${err.code}): ${err.message}`);
+                }
+
+                navigator.geolocation.getCurrentPosition(success, error, options);
+            }
+
+            // Get city name
+            function getCity(coordinates) {
+                var xhr = new XMLHttpRequest();
+                var lat = coordinates[0];
+                var lng = coordinates[1];
+
+                xhr.open('GET', "https://us1.locationiq.com/v1/reverse.php?key=pk.f36621844e7c79159ee5abca7ddc66af&lat=" +
+                    lat + "&lon=" + lng + "&format=json", true);
+                xhr.send();
+                xhr.onreadystatechange = processRequest;
+                xhr.addEventListener("readystatechange", processRequest, false);
+
+                function processRequest(e) {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        var city = response.address.city;
+                        document.getElementById("address").value = city
+                        //console.log(city);
+                        return;
+                    }
+                }
+            }
+
 
         </script>
-<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BPWleylyPQ44PB7HKSN9WKvfshkUreENBwqB6R9MqrnIBQidjz3ZzX0VS5O6_GyErURhkJhGvoNtDu1vaaN0VhE' ,'integration':'popup' });
-   webpushr('fetch_id',function (sid) { 
-       
-        $.post("/sid/<%-currentUser._id%>/", {sid:sid})
+        <!-- start webpushr code -->
+        <script>(function (w, d, s, id) { if (typeof (w.webpushr) !== 'undefined') return; w.webpushr = w.webpushr || function () { (w.webpushr.q = w.webpushr.q || []).push(arguments) }; var js, fjs = d.getElementsByTagName(s)[0]; js = d.createElement(s); js.id = id; js.async = 1; js.src = "https://cdn.webpushr.com/app.min.js"; fjs.parentNode.appendChild(js); }(window, document, 'script', 'webpushr-jssdk')); webpushr('setup', { 'key': 'BPWleylyPQ44PB7HKSN9WKvfshkUreENBwqB6R9MqrnIBQidjz3ZzX0VS5O6_GyErURhkJhGvoNtDu1vaaN0VhE', 'integration': 'popup' });
+            webpushr('fetch_id', function (sid) {
 
-    });
-</script><!-- end webpushr code -->
+                $.post("/sid/<%-currentUser._id%>/", { sid: sid })
+
+            });
+        </script><!-- end webpushr code -->
 </body>
 
 </html>

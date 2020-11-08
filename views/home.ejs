@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFury</title>
+    <title>KaamLeDo</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
@@ -21,20 +20,26 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
             <div>
-                <h3 class="float-md-left mb-0">CodeFury</h3>
+
+                <a href="/">
+                    <h3 class="float-md-left mb-0">KaamLeDo</h3>
+                </a>
                 <nav class="nav nav-masthead justify-content-center float-md-right">
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                     <% if(!currentUser) { %>
                     <a class="nav-link" href="/login">Login</a>
                     <a class="nav-link" href="/register">Register</a>
                     <% } else { %>
+                    <a class="nav-link" href="/employer">Post A Job</a>
+                    <a class="nav-link" href="/employer/<%=currentUser._id%>">Your Job List</a>
+                    <a class="nav-link" href="/accomodate">Accomodation</a>
                     <a class="nav-link" href="/logout">Logout</a>
                     <% } %>
                 </nav>
             </div>
         </header>
         <br><br><br>
-      
+
         <div class="row" style="margin-top: 30px;">
             <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
                 <div class="card shadow">
@@ -42,15 +47,16 @@
                         <h5 class="card-title" style="color: black;">Let's find you a job</h5>
                         <form action="/search-job" method="GET" class="validated-form" novalidate>
                             <div class="mb-3">
-                                
+
                                 <div class="searchable">
                                     <label class="form-label" for="job" style="color: black;">Job Title</label>
-                                <input class="form-control" list="jobl" type="text" id="job" name="job" autofocus required>
-                                <datalist id="jobl">
-                                    <%for(var i=0;i<categories.length;i++){%>
+                                    <input class="form-control" list="jobl" type="text" id="job" name="job" autofocus
+                                        required>
+                                    <datalist id="jobl">
+                                        <%for(var i=0;i<categories.length;i++){%>
                                         <option value="<%=categories[i]%>">
 
-                                        <%}%>
+                                            <%}%>
                                     
                                   </datalist>
                                 </div>
@@ -71,41 +77,46 @@
                                 </div>
                             </div>
                             <button class="btn btn-success btn-block">Search</button>
+                            <br>
+                            <br>
+                            <a class="btn btn-danger" href="/accomodate/views">Accomodation Listings</a>
+
                         </form>
                     </div>
                 </div>
             </div>
             </div>
-
-           
+<br><br><br>
             <%if(search){%>
-                
-                <br><br>
 
-            <div class="container-fluid">
-            <h1>We found these jobs matching your requirements</h1>
-            
-            
-            <div class="card " style="justify-content: center;"  >
-                <div class="row" style="color: black;">
+                                            <br><br>
 
-                <%for(var i=0;i<jobs.length;i++){%>
-                    
-                    <div class="col-sm-12 " >
-                        <div class="card-body">
-                            <h5 class="card-title">For- <%=jobs[i].jobType%> </h5>
-                            <p class="card-text">Description- <%=jobs[i].description%></p>
-                            <p class="card-text">Price- Rs <%=jobs[i].salary%></p>
+                                            <div class="container-fluid">
+                                                <h1>We found these jobs matching your requirements</h1>
 
-                            <p class="card-text">
-                              <br>  <small >City- <%=jobs[i].city%></small>
 
-                            </p>
-                            <a class="btn btn-primary" href="/apply/?jobid=<%=jobs[i]._id%>">More Info</a>
-                        </div>
-                    </div>
-                <hr style="color: blueviolet;">
-<%}%>
+                                                <div class="card " style="justify-content: center;">
+                                                    <div class="row" style="color: black;">
+
+                                                        <%for(var i=0;i<jobs.length;i++){%>
+
+                                                        <div class="col-sm-12 ">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">For- <%=jobs[i].jobType%> </h5>
+                                                                <p class="card-text">Description-
+                                                                    <%=jobs[i].description%></p>
+                                                                <p class="card-text">Price- Rs <%=jobs[i].salary%></p>
+
+                                                                <p class="card-text">
+                                                                    <br> <small>City- <%=jobs[i].city%></small>
+
+                                                                </p>
+                                                                <a class="btn btn-primary"
+                                                                    href="/apply/?jobid=<%=jobs[i]._id%>">More Info</a>
+                                                            </div>
+                                                        </div>
+                                                        <hr style="color: blueviolet;">
+                                                        <%}%>
 </div>
 
 
@@ -114,76 +125,81 @@
             </div>
 
             <%}%>
-                
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
-        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
-        crossorigin="anonymous"></script>
 
-        <script type="text/javascript">
-            
+                                                        <script
+                                                            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                                                            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                                                            crossorigin="anonymous"></script>
+                                                        <script
+                                                            src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+                                                            integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+                                                            crossorigin="anonymous"></script>
 
-//Get user coordinates 
-function getCoordintes() { 
-    var options = { 
-        enableHighAccuracy: true, 
-        timeout: 5000, 
-        maximumAge: 0 
-    }; 
-  
-    function success(pos) { 
-        var crd = pos.coords; 
-        var lat = crd.latitude.toString(); 
-        var lng = crd.longitude.toString(); 
-        var coordinates = [lat, lng]; 
-        //console.log(`Latitude: ${lat}, Longitude: ${lng}`); 
-        getCity(coordinates); 
-        return; 
-  
-    } 
-  
-    function error(err) { 
-        console.warn(`ERROR(${err.code}): ${err.message}`); 
-    } 
-  
-    navigator.geolocation.getCurrentPosition(success, error, options); 
-} 
-  
-// Get city name 
-function getCity(coordinates) { 
-    var xhr = new XMLHttpRequest(); 
-    var lat = coordinates[0]; 
-    var lng = coordinates[1]; 
-  
-    xhr.open('GET', "https://us1.locationiq.com/v1/reverse.php?key=pk.f36621844e7c79159ee5abca7ddc66af&lat=" + 
-    lat + "&lon=" + lng + "&format=json", true); 
-    xhr.send(); 
-    xhr.onreadystatechange = processRequest; 
-    xhr.addEventListener("readystatechange", processRequest, false); 
-  
-    function processRequest(e) { 
-        if (xhr.readyState == 4 && xhr.status == 200) { 
-            var response = JSON.parse(xhr.responseText); 
-            var city = response.address.city; 
-            document.getElementById("address").value=city
-            //console.log(city); 
-            return; 
-        } 
-    } 
-} 
-  
+                                                        <script type="text/javascript">
 
 
-  
+                                                            //Get user coordinates 
+                                                            function getCoordintes() {
+                                                                var options = {
+                                                                    enableHighAccuracy: true,
+                                                                    timeout: 5000,
+                                                                    maximumAge: 0
+                                                                };
+
+                                                                function success(pos) {
+                                                                    var crd = pos.coords;
+                                                                    var lat = crd.latitude.toString();
+                                                                    var lng = crd.longitude.toString();
+                                                                    var coordinates = [lat, lng];
+                                                                    //console.log(`Latitude: ${lat}, Longitude: ${lng}`); 
+                                                                    getCity(coordinates);
+                                                                    return;
+
+                                                                }
+
+                                                                function error(err) {
+                                                                    console.warn(`ERROR(${err.code}): ${err.message}`);
+                                                                }
+
+                                                                navigator.geolocation.getCurrentPosition(success, error, options);
+                                                            }
+
+                                                            // Get city name 
+                                                            function getCity(coordinates) {
+                                                                var xhr = new XMLHttpRequest();
+                                                                var lat = coordinates[0];
+                                                                var lng = coordinates[1];
+
+                                                                xhr.open('GET', "https://us1.locationiq.com/v1/reverse.php?key=pk.f36621844e7c79159ee5abca7ddc66af&lat=" +
+                                                                    lat + "&lon=" + lng + "&format=json", true);
+                                                                xhr.send();
+                                                                xhr.onreadystatechange = processRequest;
+                                                                xhr.addEventListener("readystatechange", processRequest, false);
+
+                                                                function processRequest(e) {
+                                                                    if (xhr.readyState == 4 && xhr.status == 200) {
+                                                                        var response = JSON.parse(xhr.responseText);
+                                                                        var city = response.address.city;
+                                                                        document.getElementById("address").value = city
+                                                                        //console.log(city); 
+                                                                        return;
+                                                                    }
+                                                                }
+                                                            }
 
 
-        </script>
 
-<!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BPWleylyPQ44PB7HKSN9WKvfshkUreENBwqB6R9MqrnIBQidjz3ZzX0VS5O6_GyErURhkJhGvoNtDu1vaaN0VhE' ,'integration':'popup' });</script><!-- end webpushr code --></body>
+
+
+
+                                                        </script>
+
+                                                        <!-- start webpushr code -->
+                                                        <script>(function (w, d, s, id) { if (typeof (w.webpushr) !== 'undefined') return; w.webpushr = w.webpushr || function () { (w.webpushr.q = w.webpushr.q || []).push(arguments) }; var js, fjs = d.getElementsByTagName(s)[0]; js = d.createElement(s); js.id = id; js.async = 1; js.src = "https://cdn.webpushr.com/app.min.js"; fjs.parentNode.appendChild(js); }(window, document, 'script', 'webpushr-jssdk')); webpushr('setup', { 'key': 'BPWleylyPQ44PB7HKSN9WKvfshkUreENBwqB6R9MqrnIBQidjz3ZzX0VS5O6_GyErURhkJhGvoNtDu1vaaN0VhE', 'integration': 'popup' });</script>
+                                                        <!-- end webpushr code -->
+</body>
 
 </html>

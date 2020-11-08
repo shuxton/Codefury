@@ -1,6 +1,6 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">CodeFury</a>
+        <a class="navbar-brand" href="/">KaamLeDo</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -14,8 +14,9 @@
                 <a class="nav-link" href="/login">Login</a>
                 <a class="nav-link" href="/register">Register</a>
                 <% } else {%>
-                <a class="nav-link" href="/Employer">Post A job</a>
-                <a class="nav-link" href="/Employer">Your job List</a>
+                <a class="nav-link" href="/employer">Post A Job</a>
+                <a class="nav-link" href="/employer/<%=currentUser._id%>">Your Job List</a>
+                <a class="nav-link" href="/accomodate">Accomodation</a>
                 <a class="nav-link" href="/logout">Logout</a>
                 <% } %>
             </div>

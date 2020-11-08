@@ -19,7 +19,7 @@
                     <br>
                 <button type="submit" class="btn btn-danger">Delete</button>
                 <br>
-                <%if(applied.toJobId==jobs[i]._id){%>
+                <%if(applied!=undefined && applied!=null && applied.toJobId==jobs[i]._id){%>
                 <p style="color: red;">Someone has applied for a job!</p>
                 <a class="btn btn-success" href="/apply/?jobid=<%=jobs[i]._id%>&uid=<%=currentUser._id%>">More Info</a>
 
