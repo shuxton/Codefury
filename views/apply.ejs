@@ -34,7 +34,7 @@
             </div>
         </header>
         <br><br><br>
-                
+                <%if(currentUser.emp){%>
             <div class="container-fluid">
             
             
@@ -66,7 +66,8 @@
                         <p>Your employer has been notified, they will get in touch with you shortly</p>
                         <p>You can chat with them below</p><br>
                         <a class="btn btn-danger" onclick="cancel()">Cancel</a>
-
+                        <br><br>
+                        <a class="btn btn-success" href="/chat">Chat</a>
                     </div>
                     </div>
                 <hr style="color: blueviolet;">
@@ -76,7 +77,48 @@
             </div>
             
             </div>
+            <%}else{%>
+                <div class="container-fluid">
+            
+            
+                    <div class="card " style="justify-content: center;"  >
+                        <div class="row" style="color: black;">
+        
+                            
+                            <div class="col-sm-12 " >
+                                <div class="card-body">
+                                    <h5 class="card-title">Name- <%=applied[0].email%> </h5>
+                                    <p class="card-text">Phone No- Rs <%=applied[0].phoneNumber%></p>
+        
+                                    <p class="card-text">
+                                        <small >You have got an employee!</small>        
+                                    </p>
+                                    <div style="display: block;" id="apply" >
+        
+                                    <a class="btn btn-primary"  onclick="apply()">Get in touch</a>
+                                   </div>
+        
+                                </div>
+                                <div style="display: none;" id="cancel" >
+                                    <hr>
+        
+                                <p>Your employer has been notified</p>
+                                <p>You can make a call or chat with them below</p><br>
+                                <a class="btn btn-danger" onclick="cancel()">Cancel</a>
+        
+                                <br><br>
+                                <a class="btn btn-success" href="/chat">Chat</a>
 
+                            </div>
+                            </div>
+                        <hr style="color: blueviolet;">
+        </div>
+        
+        
+                    </div>
+                    
+                    </div> 
+            <%}%>
                 
 
 
@@ -156,8 +198,7 @@ function getCity(coordinates) {
         </script>
 <!-- start webpushr code --> <script>(function(w,d, s, id) {if(typeof(w.webpushr)!=='undefined') return;w.webpushr=w.webpushr||function(){(w.webpushr.q=w.webpushr.q||[]).push(arguments)};var js, fjs = d.getElementsByTagName(s)[0];js = d.createElement(s); js.id = id;js.async=1;js.src = "https://cdn.webpushr.com/app.min.js";fjs.parentNode.appendChild(js);}(window,document, 'script', 'webpushr-jssdk'));webpushr('setup',{'key':'BPWleylyPQ44PB7HKSN9WKvfshkUreENBwqB6R9MqrnIBQidjz3ZzX0VS5O6_GyErURhkJhGvoNtDu1vaaN0VhE' ,'integration':'popup' });
    webpushr('fetch_id',function (sid) { 
-        //save id to database
-        console.log(sid)
+       
         $.post("/sid/<%-currentUser._id%>/", {sid:sid})
 
     });

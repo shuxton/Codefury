@@ -1,8 +1,36 @@
 <% layout('layouts/boilerplate')%>
-<div class="container d-flex justify-content-center align-items-center mt-5">
-    <div class="row">
-        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+<div class="card " style="justify-content: center;"  >
+    <div class="row" style="color: black;">
 
+    <%for(var i=0;i<jobs.length;i++){%>
+        
+        <div class="col-sm-12 " >
+            <div class="card-body">
+                <h5 class="card-title">For- <%=jobs[i].jobType%> </h5>
+                <p class="card-text">Description- <%=jobs[i].description%></p>
+                <p class="card-text">Price- Rs <%=jobs[i].salary%></p>
+
+                <p class="card-text">
+                  <br>  <small >City- <%=jobs[i].city%></small>
+
+                </p>
+                <a class="btn btn-primary" href="/employer/jobEdit/?jobid=<%=jobs[i]._id%>&uid=<%=currentUser._id%>">Edit</a>
+                <form action="/employer/jobDelete/<%=jobs[i]._id%>/<%=currentUser._id%>" method="POST">
+                    <br>
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <br>
+                <%if(applied.toJobId==jobs[i]._id){%>
+                <p style="color: red;">Someone has applied for a job!</p>
+                <a class="btn btn-success" href="/apply/?jobid=<%=jobs[i]._id%>&uid=<%=currentUser._id%>">More Info</a>
+
+                <%}%>
+            </form>
+
+            </div>
         </div>
-    </div>
+    <hr style="color: blueviolet;">
+<%}%>
+</div>
+
+
 </div>

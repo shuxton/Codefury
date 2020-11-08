@@ -6,12 +6,14 @@ module.exports.renderRegister = (req, res) => {
 
 module.exports.register = async (req, res, next) => {
     try {
+        var bool=true
+        if(req.body.emp=="emp")bool=false;
         var user = new User({ 
             username: req.body.email, 
  
             email:req.body.username,
             phone:req.body.phoneNumber,
-            emp:req.body.emp , 
+            emp:bool , 
             address: req.body.address  
         });
         
@@ -22,7 +24,7 @@ module.exports.register = async (req, res, next) => {
         await user.save();
         req.login(registeredUser, err => {
             if (err) return next(err);
-            req.flash('success', 'Welcome to Yelp Camp!');
+            req.flash('success', 'Welcome to Codefury!');
             res.redirect('/');
         })
     } catch (e) {

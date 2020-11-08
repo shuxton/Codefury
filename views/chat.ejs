@@ -10,21 +10,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="socket.io/socket.io.js"></script>
 <body>
 <div class="container">
  <br>
  <div class="jumbotron">
  <h1 class="display-4">Send Message</h1>
  <br>
- <input id = "name" class="form-control" placeholder="Name">
- <br>
  <textarea id = "message" class="form-control" placeholder="Your Message Here">
 </textarea>
  <br>
  <button id="send" class="btn btn-success">Send</button>
  </div>
- <div id="messages">
+ <div id="messages" style="color: darkblue;">
  
 </div>
 </div>
@@ -47,13 +45,13 @@ function addMessages(message){
    }
    
 function getMessages(){
-  $.get("/messages/?id=<%-currentUser._id%>", (data) => {
+  $.get("messages/?id=<%-currentUser.toJobId%>", (data) => {
    data.forEach(addMessages);
    })
  }
  
 function sendMessage(message){
-   $.post("/messages/<%-currentUser._id%>/<%-currentUser.email%>", message)
+   $.post("messages/<%-currentUser.toJobId%>/<%-currentUser.email%>", message)
  }
 </script>
 </body>

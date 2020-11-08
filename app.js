@@ -155,9 +155,11 @@ app.get('/search-job', corsAllow.corsWithOptions, (req, res) => {
 
 app.get('/apply', corsAllow.corsWithOptions, (req, res) => {
     Job.find({ _id: req.query.jobid }, function (err, val) {
-
-        if (err) console.log(err)
-        else res.render('apply', { jobs: val[0] })
+User.find({toJobId: req.query.jobid}, function (err, user) {
+    if (err) console.log(err)
+    else res.render('apply', { jobs: val[0],applied:user })
+})
+        
 
     })
 })
@@ -177,14 +179,23 @@ app.get('/messages', corsAllow.corsWithOptions, (req, res) => {
 })
 
 app.post('/messages/:id/:name', corsAllow.corsWithOptions, (req, res) => {
+Message.insertMany({
+    name: req.params.name, message: req.body.message, userid: req.params.id
+},(err,result)=>{
+    if (err){
+        console.log(err)
+        sendStatus(500);
 
-    var message = new Message({ name: req.params.name, message: req.body.message, userid: req.params.id });
-    message.save((err) => {
-        if (err)
-            sendStatus(500);
-        io.emit('message', message);
-        res.sendStatus(200);
-    })
+    }
+   
+    var message={
+        name: req.params.name, message: req.body.message, userid: req.params.id
+    }
+io.emit('message', message);
+res.sendStatus(200);
+})
+
+    
 })
 
 
@@ -221,7 +232,6 @@ app.post('/apply/:user', corsAllow.corsWithOptions, (req, res) => {
         };
             var data = { "title": "Your request has been accepted!", "message": "notification message", "target_url": "https://www.shuxton.herokuapp.com", "sid":user[0].sid };
             var dataString = JSON.stringify(data);
-            console.log(dataString)
             var options = {
                 url: 'https://api.webpushr.com/v1/notification/send/sid',
                 method: 'POST',
@@ -266,6 +276,7 @@ app.post('/cancel/:user', corsAllow.corsWithOptions, (req, res) => {
             if (err)
                 console.log(err)
         })
+        Message.deleteMany({userid:req.body.id})
     })
     res.sendStatus(200);
 

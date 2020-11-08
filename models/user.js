@@ -32,6 +32,9 @@ const UserSchema = new Schema({
     },
     sid:{
         type:String
+    },
+    chatKey:{
+        type:String
     }
 });
 
