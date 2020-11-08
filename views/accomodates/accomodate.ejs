@@ -8,7 +8,7 @@
                 <h1 class="center">Accomodation Services</h1>
             </div>
             <br><br>
-            <form action="/register" method="POST">
+            <form action="/accomodate/<%=currentUser._id%>" method="POST">
 
                 <div class="messages"></div>
 
@@ -16,8 +16,8 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="form-group">
-                                <label for="Name">PG Name *</label>
-                                <input id="Name" type="text" name="Name" class="form-control"
+                                <label for="name">PG Name *</label>
+                                <input id="name" type="text" name="name" class="form-control"
                                     placeholder="" required="required"
                                     data-error="Name is required.">
                                 <div class="help-block with-errors"></div>
@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <label for="city"> City *</label>
                                 <input id="city" type="text" name="city" class="form-control"
-                                    placeholder="Please enter the city where the PG is located *" required="required"
+                                    placeholder="Location *" required="required"
                                     data-error="City is required *.">
                                 <div class="help-block with-errors"></div>
                             </div>
@@ -42,7 +42,7 @@
                         <div class="col-lg-8">
                             <div class="form-group">
                                 <label for="price">Price Per Month *</label>
-                                <input id="price" type="text" name="text" class="form-control"
+                                <input id="price" type="text" name="price" class="form-control"
                                     placeholder="Please enter the price per month(inclusive of two meals a day) *"
                                     required="required" data-error="Price is required.">
                                 <div class="help-block with-errors"></div>
@@ -53,8 +53,8 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="form-group">
-                                <label for="official">Official Contact Number *</label>
-                                <input id="official" type="text" name="official" class="form-control"
+                                <label for="officialNumber">Official Contact Number *</label>
+                                <input id="officialNumber" type="text" name="officialNumber" class="form-control"
                                     required="required" placeholder="">
                                 <div class="help-block with-errors"></div>
                             </div>

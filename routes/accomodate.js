@@ -5,6 +5,11 @@ const { isLoggedIn } = require('../middleware');
 const accomodate = require('../controllers/accomodate');
 
 router.route('/accomodate')
-    .get(accomodate.renderAccomodate)
+    .get(isLoggedIn  ,accomodate.renderAccomodate)
+router.route('/accomodate/:id')
+.post(isLoggedIn , accomodate.postDetails)
+
+router.route('/accomodate/views')
+    .get(accomodate.viewAllAccomodates)
 
 module.exports = router;
