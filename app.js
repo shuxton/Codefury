@@ -145,7 +145,7 @@ app.get('/', corsAllow.corsWithOptions, (req, res) => {
 });
 
 app.get('/search-job', corsAllow.corsWithOptions, (req, res) => {
-    Job.find({ city: req.query.address }, function (err, val) {
+    Job.find({ city: req.query.address.toLowerCase() }, function (err, val) {
         Host.find({}, function (err, found) {
             if (err) console.log(err)
             else res.render('home', { categories: found[0].categories, search: true, jobs: val })
